@@ -3,10 +3,13 @@ const app = express();
 const mongoose = require('mongoose');
 mongoose.set('strictQuery',true);
 const route = require('./routes/route');
+const dotenv = require('dotenv');
 
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://sandy_varanasi:sRzKkk5zN4u6uAZG@sandy-clusture.eimj9vg.mongodb.net/group13Database", {
+require("dotenv").config();
+
+mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true
 })
 .then(()=>console.log("Mongo DB is connected"))
@@ -14,6 +17,6 @@ mongoose.connect("mongodb+srv://sandy_varanasi:sRzKkk5zN4u6uAZG@sandy-clusture.e
 
 app.use('/',route);
 
-app.listen(3000,function(){
-    console.log("server active on port "+3000)
+app.listen(process.env.PORT||3000,function(){
+    console.log("server active on port "+process.env.PORT||3000)
 });
